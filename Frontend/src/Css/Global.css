@@ -1,0 +1,18 @@
+@font-face {
+    font-family: Regilar;
+    src: url(../Assets/Fonts/sb-sans-text-medium.ttf);
+}
+
+:root {
+    --accent--color: #21BA72;
+    --text--color: #1d1d1d;
+    --background--color: #ffffff;
+    --second--background--color: #70707046;
+    --blur--effect: 8px;
+}
+
+body {
+    font-family: Regilar;
+    background-color: var(--background--color);
+    color: var(--text--color);
+}
