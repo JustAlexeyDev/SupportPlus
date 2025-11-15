@@ -1,0 +1,5 @@
+.SearchComponent {
+    display: flex;
+    background-color: var(--second--background--color);
+    backdrop-filter: blur(var(--blur--effect));
+}
