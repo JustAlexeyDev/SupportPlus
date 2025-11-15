@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // Enable CORS for frontend
+
   app.enableCors({
     origin: ['http://localhost:3000', 'http://localhost:3001'],
     credentials: true,
@@ -14,14 +14,14 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
   
-  // Global validation pipe
+
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
     transform: true,
   }));
 
-  // Swagger configuration
+
   const config = new DocumentBuilder()
     .setTitle('SupportPlus API')
     .setDescription('SupportPlus Backend API with authentication, OAuth, and beneficiary categories management')
@@ -29,6 +29,7 @@ async function bootstrap() {
     .addTag('auth', 'Authentication endpoints')
     .addTag('users', 'User management endpoints')
     .addTag('beneficiary-categories', 'Beneficiary categories endpoints')
+    .addTag('benefits', 'Benefits and commercial offers endpoints')
     .addBearerAuth(
       {
         type: 'http',

@@ -51,17 +51,17 @@ export class AuthService {
     let user = await this.usersService.findByGoogleId(googleId);
     
     if (!user && email) {
-      // Check if user exists by email
+
       user = await this.usersService.findByEmail(email);
       
       if (user) {
-        // Link OAuth to existing user
+
         user = await this.usersService.linkOAuthToUser(user.id, googleId);
       }
     }
     
     if (!user && email) {
-      // Create new OAuth user
+
       user = await this.usersService.createOAuthUser(email, googleId);
     }
 
@@ -69,7 +69,7 @@ export class AuthService {
       throw new Error('Failed to create or find user');
     }
 
-    // Reload user with relations
+
     user = await this.usersService.findById(user.id);
 
     const payload = { email: user.email, sub: user.id };

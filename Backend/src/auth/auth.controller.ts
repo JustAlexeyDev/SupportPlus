@@ -37,7 +37,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Initiate Google OAuth login' })
   @ApiResponse({ status: 302, description: 'Redirects to Google OAuth' })
   async googleAuth() {
-    // Guard redirects to Google
+
   }
 
   @Get('google/callback')
@@ -47,7 +47,7 @@ export class AuthController {
   async googleAuthRedirect(@Request() req, @Res() res: Response) {
     const result = await this.authService.validateOAuthUser(req.user);
     
-    // Redirect to frontend with token
+
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     res.redirect(`${frontendUrl}/auth/callback?token=${result.access_token}`);
   }

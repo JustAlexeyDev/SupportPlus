@@ -18,19 +18,19 @@ export class User {
   email: string;
 
   @Column({ nullable: true })
-  passwordHash: string; // SHA256 hash of 5-digit PIN
+  passwordHash: string;
 
   @Column({ nullable: true })
-  googleId: string; // For OAuth users
+  googleId: string;
 
   @Column({ default: false })
   isOAuthUser: boolean;
 
   @Column({ nullable: true })
-  snils: string; // СНИЛС
+  snils: string;
 
   @Column({ nullable: true })
-  region: string; // Region of residence
+  region: string;
 
   @ManyToMany(() => BeneficiaryCategory, { eager: true })
   @JoinTable({

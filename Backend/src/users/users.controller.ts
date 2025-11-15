@@ -12,6 +12,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiParam } from '@ne
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('users')
@@ -90,6 +91,33 @@ export class UsersController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   findOne(@Param('id') id: string) {
     return this.usersService.findById(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('preferences/me')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Get user preferences' })
+  @ApiResponse({ status: 200, description: 'Preferences retrieved successfully' })
+  getPreferences(@Request() req: any) {
+    return this.usersService.getPreferences(req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('preferences/me')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Update user preferences (hidden benefits, favorite categories)' })
+  @ApiResponse({ status: 200, description: 'Preferences updated successfully' })
+  updatePreferences(@Request() req: any, @Body() updateDto: UpdatePreferencesDto) {
+    return this.usersService.updatePreferences(req.user.id, updateDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('export/pdf')
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Export user benefits to PDF format (returns JSON for PDF generation)' })
+  @ApiResponse({ status: 200, description: 'PDF export data generated' })
+  exportToPdf(@Request() req: any) {
+    return this.usersService.exportBenefitsToPdf(req.user.id);
   }
 }
 

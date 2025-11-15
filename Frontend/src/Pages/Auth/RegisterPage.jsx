@@ -17,7 +17,6 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Load beneficiary categories
         categoryService.getAllCategories()
             .then(data => setCategories(data))
             .catch(err => console.error('Failed to load categories:', err));
@@ -80,7 +79,6 @@ const RegisterPage = () => {
                 region: region || undefined,
                 beneficiaryCategoryIds: selectedCategories.length > 0 ? selectedCategories : undefined,
             });
-            alert('Регистрация успешна! Теперь вы можете войти.');
             navigate("/login");
         } catch (err) {
             setError(err.message || 'Ошибка регистрации. Попробуйте еще раз.');

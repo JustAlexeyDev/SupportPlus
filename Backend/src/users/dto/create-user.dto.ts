@@ -17,7 +17,7 @@ export class CreateUserDto {
   })
   @IsString()
   @Length(5, 5)
-  pinCode: string; // 5-digit PIN
+  pinCode: string;
 
   @ApiProperty({
     example: '123-456-789 01',

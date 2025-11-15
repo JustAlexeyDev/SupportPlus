@@ -11,10 +11,10 @@ export class BeneficiaryCategory {
   id: number;
 
   @Column({ unique: true })
-  code: string; // e.g., 'pensioner', 'disabled', 'large_family', 'veteran', 'low_income'
+  code: string;
 
   @Column()
-  name: string; // Russian name: 'Пенсионер', 'Инвалид', etc.
+  name: string;
 
   @Column({ nullable: true })
   description: string;
