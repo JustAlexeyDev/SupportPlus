@@ -1,9 +1,10 @@
-import Header from "../../Components/Header/Header";
+import "./Home"
+
 
 const Home = () => {
     return(
-        <div>
-            <Header />
+        <div className="HomePage">
+            <button className="accent--button--type1">Click me!</button>
         </div>
     );
 }

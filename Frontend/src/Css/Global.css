@@ -5,6 +5,8 @@
 
 :root {
     --accent--color: #21BA72;
+    --accent--color--hover: #00804421;
+    --second--accent--color: #E8F7E8;
     --text--color: #1d1d1d;
     --background--color: #ffffff;
     --second--background--color: #70707046;
@@ -15,4 +17,20 @@ body {
     font-family: Regilar;
     background-color: var(--background--color);
     color: var(--text--color);
+    height: 100vh;
+    width: 100%;
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 60px; /* Space for fixed footer */
 }
