@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Get, UseGuards, Request, Res } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { LoginDto } from '../users/dto/login.dto';
 import { RequestSmsDto, VerifySmsDto } from '../users/dto/phone-login.dto';
@@ -10,7 +11,10 @@ import { Response } from 'express';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+  ) {}
 
   @Post('login')
   @ApiOperation({ summary: 'Login with email and PIN code' })
@@ -50,7 +54,7 @@ export class AuthController {
     const result = await this.authService.validateOAuthUser(req.user);
     
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3000';
     res.redirect(`${frontendUrl}/auth/callback?token=${result.access_token}`);
   }
 

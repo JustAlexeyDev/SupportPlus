@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "PORT=3000 react-scripts start",
+    "dev": "HOST=${HOST:-0.0.0.0} PORT=${PORT:-3000} react-scripts start",
     "build:prod": "NODE_OPTIONS='--max-old-space-size=1024' GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true INLINE_RUNTIME_CHUNK=false npm run build",
     "build": "react-scripts build",
     "pm2:setup": "pm2 start ../ecosystem.config.js",

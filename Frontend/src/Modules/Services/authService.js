@@ -1,6 +1,32 @@
 import api from './api';
 import Cookies from 'js-cookie';
 
+// Получение базового URL API (используем ту же логику, что и в api.js)
+const getApiBaseUrl = () => {
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  if (process.env.NODE_ENV === 'development') {
+    const hostname = window.location.hostname;
+    
+    // 0.0.0.0 не валиден для браузера, используем localhost
+    if (hostname === '0.0.0.0' || !hostname || hostname === '') {
+      return 'http://localhost:8000';
+    }
+    
+    // Проверяем, что это валидный IP адрес (не 0.0.0.0)
+    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+      if (hostname.match(/^\d+\.\d+\.\d+\.\d+$/)) {
+        return `http://${hostname}:8000`;
+      }
+    }
+    return 'http://localhost:8000';
+  }
+  
+  return process.env.REACT_APP_API_URL || 'http://localhost:8000';
+};
+
 export const authService = {
   async login(email, pinCode) {
     try {
@@ -48,7 +74,8 @@ export const authService = {
   },
 
   initiateGoogleLogin() {
-    window.location.href = `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/auth/google`;
+    const apiBaseUrl = getApiBaseUrl();
+    window.location.href = `${apiBaseUrl}/auth/google`;
   },
 
   async requestSmsCode(phone) {

@@ -13,7 +13,6 @@ interface SmsCode {
 
 @Injectable()
 export class AuthService {
-  // In-memory storage for SMS codes (stub)
   private smsCodes: Map<string, SmsCode> = new Map();
   private readonly SMS_CODE_EXPIRY_MINUTES = 5;
 
@@ -79,8 +78,6 @@ export class AuthService {
 
     this.smsCodes.set(phone, { code, phone, expiresAt });
 
-    // In production, send SMS here
-    // For stub, return code in response (in production, remove code from response)
     return {
       message: 'SMS code sent (stub mode - code returned in response)',
       code, // Remove this in production

@@ -18,6 +18,8 @@ import { BenefitsService } from './benefits/benefits.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['.env.local', '.env'], // Сначала .env.local, потом .env
+      expandVariables: true, // Поддержка переменных ${VAR}
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

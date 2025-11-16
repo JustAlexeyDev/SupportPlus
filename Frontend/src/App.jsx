@@ -60,11 +60,13 @@ const App = () => {
         return <div className="root">Loading...</div>;
     }
 
+    const isAuthPage = ['/firstlogin', '/login', '/login/phone', '/login/username', '/register', '/auth/callback'].includes(location.pathname);
+
     return (
-        <div className={`App ${isStandalone ? 'standalone' : ''}`}>
+        // <div className={`App ${isStandalone ? 'standalone' : ''}`}>
             <div className="root">
-                <Header />
-                <main className="main-content">
+                {!isAuthPage && <Header />}
+                {/* <div className="main-content"> */}
                     <Routes>
                         <Route 
                             path="/firstlogin"
@@ -144,11 +146,11 @@ const App = () => {
                         />
                     </Routes>
                     <PWAInstallPrompt />
-                </main>
-                <Footer />
+                {/* </div> */}
+                {!isAuthPage && <Footer />}
             </div>
 
-        </div>
+        // </div>
     );
 };
 

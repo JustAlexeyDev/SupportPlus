@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 export const useRegister = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [snils, setSnils] = useState('');
     const [region, setRegion] = useState('');
     const [categories, setCategories] = useState([]);
@@ -35,14 +34,6 @@ export const useRegister = () => {
         }
     };
 
-    const handleConfirmPasswordChange = (e) => {
-        const value = e.target.value;
-        if (value === '' || /^[0-9]+$/.test(value)) {
-            setConfirmPassword(value);
-            setError('');
-        }
-    };
-
     const handleCategoryToggle = (categoryId) => {
         setSelectedCategories(prev => 
             prev.includes(categoryId)
@@ -52,11 +43,6 @@ export const useRegister = () => {
     };
 
     const validateForm = () => {
-        if (password !== confirmPassword) {
-            setError('Пин-код не совпадают');
-            return false;
-        }
-
         if (password.length !== 5) {
             setError('Пин-код должен содержать 5 цифр');
             return false;
@@ -101,8 +87,6 @@ export const useRegister = () => {
         setEmail,
         password,
         setPassword,
-        confirmPassword,
-        setConfirmPassword,
         snils,
         setSnils,
         region,
@@ -113,7 +97,6 @@ export const useRegister = () => {
         error,
         handleEmailChange,
         handlePasswordChange,
-        handleConfirmPasswordChange,
         handleCategoryToggle,
         handleSubmit
     };

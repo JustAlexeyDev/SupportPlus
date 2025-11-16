@@ -17,10 +17,16 @@
 a, a:link, a:visited  {
     text-decoration: none;
 	color: var(--text--color);
+	cursor: pointer;
 }
 
 a:hover  {
     text-decoration: none;
+}
+
+a:focus {
+	outline: 2px solid var(--accent--color);
+	outline-offset: 2px;
 }
 
 /* Common */

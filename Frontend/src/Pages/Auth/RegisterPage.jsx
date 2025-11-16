@@ -20,7 +20,6 @@ const RegisterPage = () => {
     const {
         email,
         password,
-        confirmPassword,
         snils,
         setSnils,
         region,
@@ -30,7 +29,6 @@ const RegisterPage = () => {
         error,
         handleEmailChange,
         handlePasswordChange,
-        handleConfirmPasswordChange,
         handleCategoryToggle,
         handleSubmit
     } = useRegister();
@@ -39,7 +37,6 @@ const RegisterPage = () => {
     const [phone, setPhone] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    // Форматирование номера телефона с маской +7(999)-999-99-99
     const formatPhoneDisplay = (digits) => {
         if (!digits || digits.length === 0) return '';
         let cleanDigits = digits.replace(/^[78]/, '');
@@ -183,7 +180,7 @@ const RegisterPage = () => {
                 {error && <div className="Auth--Error">{error}</div>}
                 
                 <button type="submit" className="Auth--Button" disabled={loading}>
-                    {loading ? 'Регистрация...' : 'Sign Up'}
+                    {loading ? 'Регистрация...' : 'Регистрация'}
                 </button>
 
                 <div className="Auth--FooterLink">
