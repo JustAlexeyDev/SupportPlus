@@ -3,19 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+
   "scripts": {
     "dev": "PORT=3000 react-scripts start",
-    "build:prod": "NODE_OPTIONS='--max-old-space-size=1024' GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true INLINE_RUNTIME_CHUNK=false bun run build",
-    "pm2:setup": "pm2 start ecosystem.config.js",
-    "pm2:start": "pm2 start frontend",
+    "build:prod": "NODE_OPTIONS='--max-old-space-size=1024' GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true INLINE_RUNTIME_CHUNK=false npm run build",
+    "build": "react-scripts build",
+    "pm2:setup": "pm2 start ../ecosystem.config.js",
+    "pm2:start": "pm2 start ecosystem.config.js --only frontend",
     "pm2:stop": "pm2 stop frontend",
     "pm2:restart": "pm2 restart frontend",
     "pm2:logs": "pm2 logs frontend",
-    "pm2:monit": "pm2 monit",
-    "deploy:frontend": "bun run build:prod && pm2 restart frontend",
-    "deploy:full": "./deploy-pm2.sh",
-    "setup:nginx": "./setup-nginx-pm2.sh"
+    "pm2:delete": "pm2 delete frontend",
+    "serve:prod": "serve -s build -l 3000",
+    "deploy:frontend": "npm run build:prod && pm2 restart frontend"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
