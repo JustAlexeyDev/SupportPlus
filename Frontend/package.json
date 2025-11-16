@@ -9,8 +9,10 @@
     "dev": "node --max-old-space-size=1024 node_modules/.bin/react-scripts start",
     "build:prod": "node --max-old-space-size=1024 node_modules/.bin/react-scripts build",
     "build:light": "GENERATE_SOURCEMAP=false node --max-old-space-size=1024 node_modules/.bin/react-scripts build",
-    "deploy:light": "bun run build:light && rsync -av --delete build/ /usr/share/nginx/html/ && echo 'Deploy completed'",
-    "deploy:restart": "bun run build:light && rsync -av --delete build/ /usr/share/nginx/html/ && sudo systemctl reload nginx"
+    "build:optimized": "NODE_OPTIONS='--max-old-space-size=1024' GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true bun run build",
+    "deploy:full": "bun run build:optimized && chmod +x ./deploy.sh && ./deploy.sh",
+    "deploy:ci": "bun run build:optimized && rsync -av --delete build/ /usr/share/nginx/html/ && sudo systemctl reload nginx",
+    "deploy:docker": "bun run build:optimized && docker build -t my-app . && docker-compose up -d"
   },
   "keywords": [],
   "author": "",
