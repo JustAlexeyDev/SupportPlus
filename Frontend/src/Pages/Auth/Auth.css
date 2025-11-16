@@ -7,18 +7,114 @@
     width: 100%;
     height: 100vh;
     z-index: 1001;
-    background-color: var(--background--color);
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .Auth--Content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
     align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding-top: 20px;
+    justify-content: space-between;
+}
+
+.Auth--BackButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #000000;
+    z-index: 1002;
+}
+
+.Auth--BackButton:hover {
+    background-color: #f5f5f5;
+}
+
+.Auth--Form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.Auth--FormTitle {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 8px;
+    text-align: left;
+    width: 100%;
+}
+
+.Auth--InputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+}
+
+.Auth--InputLabel {
+    font-size: 14px;
+    color: #666666;
+    font-weight: 400;
+    margin: 0;
+}
+
+.Auth--InputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+    transition: border-color 0.3s;
+}
+
+.Auth--InputWrapper:focus-within {
+    border-bottom-color: #4CAF50;
+}
+
+.Auth--InputIcon {
+    color: #4CAF50;
+    margin-right: 12px;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.Auth--Input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #000000;
+    background: transparent;
+    padding: 0;
+    width: 100%;
+}
+
+.Auth--Input::placeholder {
+    color: #b0b0b0;
 }
 
 .Auth--PasswordInput {
@@ -26,48 +122,100 @@
     font-size: 18px;
     text-align: center;
     letter-spacing: 8px;
-    border: 2px solid var(--text--color);
-    border-radius: 8px;
-    width: 200px;
-    max-width: 90%;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0;
+    width: 100%;
+    background: transparent;
+    outline: none;
 }
 
 .Auth--PasswordInput:focus {
-    outline: none;
-    border-color: var(--accent--color);
+    border-bottom-color: #4CAF50;
 }
 
-.Auth--Input {
-    padding: 12px 16px;
-    font-size: 16px;
-    border: 2px solid var(--text--color);
-    border-radius: 8px;
-    width: 300px;
-    max-width: 90%;
+.Auth--PasswordToggle {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #666666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 24px;
+    height: 24px;
 }
 
-.Auth--Input:focus {
-    outline: none;
-    border-color: var(--accent--color);
+.Auth--PasswordToggle:hover {
+    color: #4CAF50;
 }
 
 .Auth--Button {
-    padding: 12px 24px;
+    padding: 16px 24px;
     font-size: 16px;
-    background-color: var(--accent--color);
-    color: white;
+    font-weight: 600;
+    background-color: #4CAF50;
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    width: 300px;
-    max-width: 90%;
+    width: 100%;
     transition: background-color 0.3s;
+    margin-top: 8px;
 }
 
-.Auth--Button:hover {
-    background-color: var(--accent--color--hover);
+.Auth--Button:hover:not(:disabled) {
+    background-color: #45a049;
 }
 
-.Auth--Button:active {
+.Auth--Button:active:not(:disabled) {
     transform: scale(0.98);
+}
+
+.Auth--Button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.Auth--Error {
+    color: #f44336;
+    font-size: 14px;
+    margin-top: -8px;
+    text-align: left;
+}
+
+.Auth--FooterLink {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+}
+
+.Auth--FooterLink a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.Auth--FooterLink a:hover {
+    text-decoration: underline;
+}
+
+.Auth--Container__Block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100vw;
+    padding: 20px;
+}
+
+.Auth--Container__Block--JCSB {
+    display: flex;
+    justify-content: space-between;
+    width: 100% !important;
+    gap: 20px;
 }

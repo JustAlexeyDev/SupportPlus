@@ -50,6 +50,53 @@ export const authService = {
   initiateGoogleLogin() {
     window.location.href = `${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/auth/google`;
   },
+
+  async requestSmsCode(phone) {
+    try {
+      const response = await api.post('/auth/phone/request-sms', {
+        phone,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  async verifySmsCode(phone, code) {
+    try {
+      const response = await api.post('/auth/phone/verify-sms', {
+        phone,
+        code,
+      });
+      
+      if (response.data.access_token) {
+        Cookies.set('access_token', response.data.access_token, { expires: 7 });
+        return response.data;
+      }
+      throw new Error('No access token received');
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  async loginWithUsername(username, password) {
+    try {
+      const response = await api.post('/auth/login/username', {
+        username,
+        password,
+      });
+      
+      if (response.data.access_token) {
+        Cookies.set('access_token', response.data.access_token, { expires: 7 });
+        return response.data;
+      }
+      throw new Error('No access token received');
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
 };
+
+
 
 
