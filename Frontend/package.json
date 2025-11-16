@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts --max_old_space_size=1024 start",
+    "build": "react-scripts --max_old_space_size=1024 build",
+    "dev": "node --max-old-space-size=1024 node_modules/.bin/react-scripts start",
+    "build:prod": "node --max-old-space-size=1024 node_modules/.bin/react-scripts build",
+    "build:light": "GENERATE_SOURCEMAP=false node --max-old-space-size=1024 node_modules/.bin/react-scripts build"
   },
   "keywords": [],
   "author": "",
