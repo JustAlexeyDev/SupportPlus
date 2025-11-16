@@ -7,6 +7,8 @@ import App from "./App";
 import "./Css/Global.css";
 import "./Css/Reset.css";
 import "./Css/Buttons.css";
+import "./Css/Forms.css";
+import "./Css/Headings.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,3 +19,15 @@ root.render(
         </BrowserRouter>
     </React.StrictMode>
 );
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
