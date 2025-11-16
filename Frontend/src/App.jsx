@@ -2,12 +2,17 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import { authService } from "./Modules/Services/authService";
 import { userService } from "./Modules/Services/userService";
+import { usePWA } from "./Modules/hooks/usePWA";
 
 // import pages
 import Home from "./Pages/Home/Home";
 import LoginPage from "./Pages/Auth/LoginPage";
 import RegisterPage from "./Pages/Auth/RegisterPage";
 import OAuthCallback from "./Pages/Auth/OAuthCallback";
+import FirstLogin from "./Pages/Auth/FirstLogin";
+import PhoneLoginPage from "./Pages/Auth/PhoneLoginPage";
+import UsernameLoginPage from "./Pages/Auth/UsernameLoginPage";
+import PWAInstallPrompt from "./Components/PWAInstallPrompt/PWAInstallPrompt";
 
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
@@ -16,8 +21,8 @@ const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const location = useLocation();
+    const { isStandalone } = usePWA();
 
-    // Check authentication status by verifying token
     const checkAuthStatus = useCallback(async () => {
         const token = authService.getToken();
         
@@ -26,29 +31,26 @@ const App = () => {
             return false;
         }
 
-        // Verify token by trying to get user profile
         try {
             await userService.getProfile();
             setIsAuthenticated(true);
             return true;
         } catch (error) {
-            // Token is invalid, clear it
             authService.logout();
             setIsAuthenticated(false);
             return false;
         }
     }, []);
 
-    // Initialize auth status on mount
     useEffect(() => {
         checkAuthStatus().finally(() => {
             setLoading(false);
         });
     }, [checkAuthStatus]);
 
-    // Re-check auth status when route changes
     useEffect(() => {
-        if (!loading && location.pathname !== '/login' && location.pathname !== '/register') {
+        const authPaths = ['/login', '/login/phone', '/login/username', '/register', '/firstlogin'];
+        if (!loading && !authPaths.includes(location.pathname)) {
             checkAuthStatus();
         }
     }, [location.pathname, checkAuthStatus, loading]);
@@ -59,62 +61,93 @@ const App = () => {
     }
 
     return (
-        <div className="root">
-            <Header />
-            <main className="main-content">
-                <Routes>
-                    <Route 
-                        path="/login" 
-                        element={
-                            !isAuthenticated ? 
-                            <LoginPage /> : 
-                            <Navigate to="/home" replace />
-                        } 
-                    />
-                    
-                    <Route 
-                        path="/register" 
-                        element={
-                            !isAuthenticated ? 
-                            <RegisterPage /> : 
-                            <Navigate to="/home" replace />
-                        } 
-                    />
-                    
-                    <Route 
-                        path="/auth/callback" 
-                        element={<OAuthCallback />} 
-                    />
-                    
-                    <Route 
-                        path="/home" 
-                        element={
-                            isAuthenticated ? 
-                            <Home /> : 
-                            <Navigate to="/login" replace />
-                        } 
-                    />
-                    
-                    <Route 
-                        path="/" 
-                        element={
-                            isAuthenticated ? 
-                            <Navigate to="/home" replace /> : 
-                            <Navigate to="/login" replace />
-                        } 
-                    />
-                    
-                    <Route 
-                        path="/*" 
-                        element={
-                            isAuthenticated ? 
-                            <Home /> : 
-                            <Navigate to="/login" replace />
-                        } 
-                    />
-                </Routes>
-            </main>
-            <Footer />
+        <div className={`App ${isStandalone ? 'standalone' : ''}`}>
+            <div className="root">
+                <Header />
+                <main className="main-content">
+                    <Routes>
+                        <Route 
+                            path="/firstlogin"
+                            element={
+                                !isAuthenticated ?
+                                <FirstLogin /> :
+                                <Navigate to="/home" replace />
+                            }
+                        />
+
+                        <Route 
+                            path="/login" 
+                            element={
+                                !isAuthenticated ? 
+                                <FirstLogin /> : 
+                                <Navigate to="/home" replace />
+                            } 
+                        />
+
+                        <Route 
+                            path="/login/phone" 
+                            element={
+                                !isAuthenticated ? 
+                                <PhoneLoginPage /> : 
+                                <Navigate to="/home" replace />
+                            } 
+                        />
+
+                        <Route 
+                            path="/login/username" 
+                            element={
+                                !isAuthenticated ? 
+                                <UsernameLoginPage /> : 
+                                <Navigate to="/home" replace />
+                            } 
+                        />
+                        
+                        <Route 
+                            path="/register" 
+                            element={
+                                !isAuthenticated ? 
+                                <RegisterPage /> : 
+                                <Navigate to="/home" replace />
+                            } 
+                        />
+                        
+                        <Route 
+                            path="/auth/callback" 
+                            element={<OAuthCallback />} 
+                        />
+                        
+                        <Route 
+                            path="/home" 
+                            element={
+                                isAuthenticated ? 
+                                <Home /> : 
+                                <Navigate to="/login" replace />
+                            } 
+                        />
+                        
+                        <Route 
+                            path="/" 
+                            element={
+                                isAuthenticated ? 
+                                <Navigate to="/home" replace /> : 
+                                <Navigate to="/login" replace />
+                            } 
+                        />
+                        
+                        <Route 
+                            path="/*" 
+                            element={
+                                isAuthenticated ? 
+                                <Home /> : 
+                                <Navigate to="/login" replace />
+                            } 
+                        />
+                    </Routes>
+                    <PWAInstallPrompt />
+                </main>
+                <Footer />
+            </div>
+
         </div>
     );
 };
