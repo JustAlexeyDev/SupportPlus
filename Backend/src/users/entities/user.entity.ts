@@ -17,6 +17,12 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column({ nullable: true, unique: true })
+  phone: string;
+
+  @Column({ nullable: true, unique: true })
+  username: string;
+
   @Column({ nullable: true })
   passwordHash: string;
 
@@ -46,5 +52,7 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 }
+
+
 
 

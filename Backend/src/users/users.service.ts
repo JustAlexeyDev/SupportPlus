@@ -10,6 +10,7 @@ import { BeneficiaryCategory } from '../beneficiary-categories/entities/benefici
 import { Benefit } from '../benefits/entities/benefit.entity';
 import { CommercialOffer } from '../benefits/entities/commercial-offer.entity';
 import * as crypto from 'crypto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -74,6 +75,20 @@ export class UsersService {
     });
   }
 
+  async findByPhone(phone: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { phone },
+      relations: ['beneficiaryCategories'],
+    });
+  }
+
+  async findByUsername(username: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { username },
+      relations: ['beneficiaryCategories'],
+    });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
 
@@ -100,6 +115,15 @@ export class UsersService {
   verifyPin(pinCode: string, hash: string): boolean {
     const computedHash = this.hashPin(pinCode);
     return computedHash === hash;
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10;
+    return bcrypt.hash(password, saltRounds);
+  }
+
+  async verifyPassword(password: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(password, hash);
   }
 
   async createOAuthUser(email: string, googleId: string): Promise<User> {
