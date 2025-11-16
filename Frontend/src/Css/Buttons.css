@@ -5,11 +5,31 @@
     color: var(--accent--color);
     padding-left: 24px;
     padding-right: 24px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    transition: background-color 0.3s ease;     
+    padding-top: 12px;
+    padding-bottom: 12px;
+    transition: background-color 0.3s ease;    
+    text-align: center;
+    align-items: center;
+    justify-content: center; 
 }
 .accent--button--type1:hover,
 .accent--button--type1:focus {
     background-color: var(--accent--color--hover);
+}
+
+.second--button--type1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--second--background--color);
+    height: 100px;
+    padding: 12px;
+    border-radius: 16px;
+    width: 100%;
+    text-align: left;
+}
+
+.second--button--accent {
+    background-color: var(--accent--color) !important;
+    color: var(--inverse--color) !important;
 }

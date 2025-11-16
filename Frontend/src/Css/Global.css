@@ -1,16 +1,13 @@
-@font-face {
-    font-family: Regilar;
-    src: url(../Assets/Fonts/sb-sans-text-medium.ttf);
-}
-
 :root {
     --accent--color: #21BA72;
     --accent--color--hover: #00804421;
     --second--accent--color: #E8F7E8;
     --text--color: #1d1d1d;
     --background--color: #ffffff;
-    --second--background--color: #70707046;
+    --second--background--color: #c7c7c746;
     --blur--effect: 8px;
+    --inverse--color: #ffffff;
+    --border--color: #A2A2A7;
 }
 
 body {
@@ -32,5 +29,5 @@ body {
 .main-content {
     flex: 1;
     overflow-y: auto;
-    padding-bottom: 60px; /* Space for fixed footer */
+    padding-bottom: 60px;
 }

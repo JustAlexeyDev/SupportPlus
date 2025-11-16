@@ -1,0 +1,11 @@
+@font-face {
+    font-family: Regilar;
+    src: url(../Assets/Fonts/sb-sans-text-medium.ttf);
+}
+
+h1 {
+    font-size: 32;
+    font-style: regular;
+    font-family: Regular;
+    font-weight: 400;
+}
