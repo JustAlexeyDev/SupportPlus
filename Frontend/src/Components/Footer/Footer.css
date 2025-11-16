@@ -22,3 +22,8 @@
     align-items: center;
     color: #ffffff;
 }
+
+.Footer--Content--Text--Center {
+    padding: 16px;
+    text-align: center;
+}
