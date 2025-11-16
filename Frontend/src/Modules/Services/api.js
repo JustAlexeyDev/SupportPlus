@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
-// Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -11,7 +10,6 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
     const token = Cookies.get('access_token');
@@ -25,12 +23,10 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - clear token and redirect to login
       Cookies.remove('access_token');
       window.location.href = '/login';
     }
@@ -39,4 +35,5 @@ api.interceptors.response.use(
 );
 
 export default api;
+
 

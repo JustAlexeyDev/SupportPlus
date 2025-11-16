@@ -1,5 +1,5 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
@@ -19,18 +19,22 @@ import { BenefitsService } from './benefits/benefits.service';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'supportplus.db',
-      entities: [
-        User,
-        UserPreferences,
-        BeneficiaryCategory,
-        Benefit,
-        CommercialOffer,
-      ],
-      synchronize: true,
-      logging: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: (configService.get<string>('DB_TYPE') || 'sqlite') as any,
+        database: configService.get<string>('DB_DATABASE') || 'supportplus.db',
+        entities: [
+          User,
+          UserPreferences,
+          BeneficiaryCategory,
+          Benefit,
+          CommercialOffer,
+        ],
+        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true' || true,
+        logging: configService.get<string>('DB_LOGGING') === 'true' || true,
+      }),
+      inject: [ConfigService],
     }),
     AuthModule,
     UsersModule,

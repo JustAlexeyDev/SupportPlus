@@ -12,3 +12,4 @@ import { BeneficiaryCategory } from './entities/beneficiary-category.entity';
 })
 export class BeneficiaryCategoriesModule {}
 
+

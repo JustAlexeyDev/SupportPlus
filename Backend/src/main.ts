@@ -6,9 +6,13 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-
+  // CORS Configuration
+  const corsOrigins = process.env.CORS_ORIGINS 
+    ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+    : ['http://localhost:3000', 'http://localhost:3001'];
+  
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: corsOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -22,10 +26,16 @@ async function bootstrap() {
   }));
 
 
+  // Swagger Configuration
+  const swaggerPath = process.env.SWAGGER_PATH || 'api';
+  const swaggerTitle = process.env.SWAGGER_TITLE || 'SupportPlus API';
+  const swaggerDescription = process.env.SWAGGER_DESCRIPTION || 'SupportPlus Backend API with authentication, OAuth, and beneficiary categories management';
+  const swaggerVersion = process.env.SWAGGER_VERSION || '1.0';
+
   const config = new DocumentBuilder()
-    .setTitle('SupportPlus API')
-    .setDescription('SupportPlus Backend API with authentication, OAuth, and beneficiary categories management')
-    .setVersion('1.0')
+    .setTitle(swaggerTitle)
+    .setDescription(swaggerDescription)
+    .setVersion(swaggerVersion)
     .addTag('auth', 'Authentication endpoints')
     .addTag('users', 'User management endpoints')
     .addTag('beneficiary-categories', 'Beneficiary categories endpoints')
@@ -44,7 +54,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document, {
+  SwaggerModule.setup(swaggerPath, app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },
@@ -53,7 +63,7 @@ async function bootstrap() {
   const port = process.env.PORT || 8000;
   await app.listen(port);
   console.log(`Application is running on: http://localhost:${port}`);
-  console.log(`Swagger documentation available at: http://localhost:${port}/api`);
+  console.log(`Swagger documentation available at: http://localhost:${port}/${swaggerPath}`);
 }
 bootstrap();
 
